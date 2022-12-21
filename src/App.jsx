@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css';
 import { useAppDispatch, useAppSelector } from './app/hook';
-import { incremented } from './features/counter/counterSlice';
+import { decremented, incremented, increaseByAmount } from './features/counter/counterSlice';
 import { store } from './app/store'
 
 function App() {
@@ -21,8 +20,15 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button >
-          count is {count}
+        <p> { count }</p>
+        <button onClick={() => dispatch(incremented())}>
+          increment
+        </button>
+        <button onClick={() => dispatch(decremented())}>
+          decrement
+        </button>
+        <button onClick={() => dispatch(increaseByAmount(4))}>
+          increment by 4
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
