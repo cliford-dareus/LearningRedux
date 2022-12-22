@@ -1,12 +1,14 @@
-import reactLogo from './assets/react.svg'
+import reactLogo from './assets/react.svg';
 import './App.css';
 import { useAppDispatch, useAppSelector } from './app/hook';
 import { decremented, incremented, increaseByAmount } from './features/counter/counterSlice';
-import { store } from './app/store'
-
+import { store } from './app/store';
+import { useGetPostsQuery, useGetCommentsQuery} from './features/dog/dogSlice';
 function App() {
   const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
+
+  const { data = [] , isFetching } = useGetPostsQuery(5);
 
   return (
     <div className="App">
@@ -30,9 +32,20 @@ function App() {
         <button onClick={() => dispatch(increaseByAmount(4))}>
           increment by 4
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+        {/* Api */}
+        <div>
+          <h3>Post</h3>
+          <p>status: {isFetching? 'Loading': 'Done'}</p>
+        </div>
+
+        <div>
+          {data?.map(post => (
+            <div key={post.id}>
+              <h4>{post.title}</h4>
+            </div>
+          ))}
+        </div>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
@@ -41,4 +54,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
